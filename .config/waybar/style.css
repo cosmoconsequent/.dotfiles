@@ -1,0 +1,76 @@
+* {
+  font-size: 14px;
+}
+
+@define-color bg #181818;
+@define-color fg #d8d8d8;
+@define-color urgent #eb4d4b;
+@define-color critical_bg #ff0000;
+@define-color white #ffffff;
+
+window#waybar {
+  background-color: @bg;
+  color: @fg;
+}
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset */
+  box-shadow: inset 0 -3px transparent;
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px @fg;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  color: @fg;
+}
+
+/* hyprland, sway */
+#workspaces button.active,
+#workspaces button.focused {
+  box-shadow: inset 0 -3px @fg;
+}
+
+#workspaces button.urgent {
+  background-color: @urgent;
+}
+
+#workspaces,
+#submap,
+#idle_inhibitor,
+#cpu,
+#memory,
+#network,
+#bluetooth,
+#pulseaudio,
+#battery,
+#clock {
+  margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+#idle_inhibitor.activated {
+  background-color: @fg;
+  color: @bg;
+}
+
+#battery.critical:not(.charging) {
+  background-color: @critical_bg;
+  color: @white;
+}
