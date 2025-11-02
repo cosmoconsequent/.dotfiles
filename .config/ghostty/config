@@ -1,0 +1,9 @@
+font-family = JetBrains Mono
+font-size = 13.0
+adjust-cell-height = 20%
+background = 181818
+foreground = d8d8d8
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+macos-option-as-alt = true

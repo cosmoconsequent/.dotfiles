@@ -1,0 +1,18 @@
+[[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+
+export EDITOR="nvim"
+
+[[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ]] && export PATH="$HOMEBREW_PREFIX/opt/llvm/bin:$PATH"
+if command -v clang >/dev/null 2>&1; then
+    export CC="clang"
+    export CXX="clang++"
+fi
+
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+[[ -d /usr/local/go/bin ]] && export PATH="/usr/local/go/bin:$PATH"
+
+[[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
+
+true

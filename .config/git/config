@@ -1,0 +1,19 @@
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = kanagawa
+[merge]
+	conflictStyle = zdiff3
+[credential]
+	helper = cache
+	helper = !type pass-git-helper >/dev/null 2>&1 && pass-git-helper $@
+	helper = !test -x $(git --exec-path)/git-credential-osxkeychain && $(git --exec-path)/git-credential-osxkeychain $@
+[include]
+	path = ~/.config/git/config.local
