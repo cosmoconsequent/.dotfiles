@@ -12,12 +12,14 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
   (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, some on-demand utils)
 * **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `kanshi` and `pass` on Linux.
 
+![Arch 2238](.config/dotfiles/arch-2238.png)
+
 ## Installation
 
 To use these dotfiles, clone as a bare repo:
 
 ```sh
-git clone --bare <this-repo-url> $HOME/.dotfiles
+git clone --bare https://github.com/cosmoconsequent/.dotfiles.git $HOME/.dotfiles
 ```
 
 Then run the following in tty / terminal emulator:
