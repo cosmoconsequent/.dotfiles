@@ -1,0 +1,22 @@
+output "LG Electronics LG ULTRAGEAR 306NTDV4P106" {
+  mode 3440x1440
+  position 0,0
+  scale 1
+  alias $LG34
+}
+
+output "AU Optronics 0x233D Unknown" {
+  mode 1920x1080
+  position 3440,720
+  scale 1.25
+  alias $INTERNAL
+}
+
+profile docked {
+  output $LG34 enable
+  output $INTERNAL enable
+}
+
+profile undocked {
+  output $INTERNAL enable
+}
