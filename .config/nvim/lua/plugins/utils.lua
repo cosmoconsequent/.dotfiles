@@ -152,13 +152,19 @@ return {
   },
 
   {
-    "toppair/peek.nvim",
-    event = { "VeryLazy" },
-    build = "deno task --quiet build:fast",
-    config = function()
-      require("peek").setup()
-      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-    end,
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {
+      completions = { lsp = { enabled = true } },
+    },
+  },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = ":call mkdp#util#install()",
   },
 }

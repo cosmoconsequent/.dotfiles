@@ -21,6 +21,8 @@ prompt pure
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 autoload -Uz compinit; compinit
 
+[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+
 # plugins
 load_plugin() {
     local plugin_name=$1
@@ -66,7 +68,7 @@ mkcd() {
 }
 
 function config {
-    /usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
+    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
 }
 
 # aliases
@@ -79,11 +81,6 @@ alias fz="fzf --preview 'bat --style=numbers --color=always {} 2>/dev/null || ca
 alias fze="$EDITOR \$(fz)"
 
 alias gl='git log --oneline --graph --decorate'
-
-# programming
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 
 # startup
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
