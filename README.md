@@ -10,7 +10,7 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
 * **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS. Recently rebuilt from kickstart and comprehensively extended.\
   (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, some on-demand utils)
-* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `kanshi` and `pass` on Linux.
+* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `hyprdynamicmonitors`/`kanshi` and `pass` on Linux.
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 

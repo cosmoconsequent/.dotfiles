@@ -84,8 +84,8 @@ alias gl='git log --oneline --graph --decorate'
 
 # startup
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
-    if command -v hyprland >/dev/null 2>&1; then
-        exec hyprland
+    if command -v start-hyprland >/dev/null 2>&1; then
+        exec start-hyprland
     elif command -v sway >/dev/null 2>&1; then
         exec sway
     fi
