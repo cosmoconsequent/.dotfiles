@@ -5,9 +5,9 @@ output "LG Electronics LG ULTRAGEAR 306NTDV4P106" {
   alias $LG34
 }
 
-output "AU Optronics 0x233D Unknown" {
+output "Lenovo Group Limited N160JCA-GT1" {
   mode 1920x1080
-  position 3440,720
+  position 3440,480
   scale 1.25
   alias $INTERNAL
 }
