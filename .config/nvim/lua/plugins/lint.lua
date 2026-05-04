@@ -11,7 +11,7 @@ return {
         c = { "clangtidy" },
         cpp = { "clangtidy" },
         rust = { "clippy" },
-        go = { "golangci_lint" },
+        go = { "golangcilint" },
         -- python via ruff lsp
         -- web
         javascript = { "eslint_d" },

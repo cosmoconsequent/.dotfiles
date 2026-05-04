@@ -154,6 +154,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = { "markdown", "codecompanion" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -166,5 +167,21 @@ return {
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
     build = ":call mkdp#util#install()",
+  },
+
+  {
+    "HakonHarnes/img-clip.nvim",
+    opts = {
+      filetypes = {
+        codecompanion = {
+          prompt_for_file_name = false,
+          template = "[Image]($FILE_PATH)",
+          use_absolute_path = true,
+        },
+      },
+    },
+    keys = {
+      { "<leader>i", "<cmd>PasteImage<cr>", mode = "n", desc = "Paste [I]mage from clipboard" },
+    },
   },
 }

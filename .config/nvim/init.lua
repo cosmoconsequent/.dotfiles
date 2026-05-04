@@ -7,6 +7,7 @@ require("lazy_vim")
 -- no keymap group overloads
 
 -- keymap groups:
+-- "[A]I"
 -- "[C]ode"
 -- "[D]ebug"
 -- "[F]ind"

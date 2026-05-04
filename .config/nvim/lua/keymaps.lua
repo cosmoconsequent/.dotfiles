@@ -26,7 +26,7 @@ vim.keymap.set("n", "=ap", "mz=ap'z")
 vim.keymap.set("x", "<leader>p", '"_dP')
 vim.keymap.set({ "n", "v" }, "<leader>x", '"_d') -- "discard" as black hole delete
 
-vim.keymap.set({ "n", "v" }, "<leader>a", "ggVG")
+vim.keymap.set({ "n", "v" }, "<leader>v", "ggVG")
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

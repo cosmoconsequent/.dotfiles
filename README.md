@@ -1,6 +1,6 @@
 # Dotfiles
 
-Designed to be simple, efficient, performant and stay out of the way. Keyboard and terminal-centric. Unix/Emacs keys in the terminal, Vim keys everywhere else.
+Designed to be simple, efficient, performant and stay out of the way. Keyboard and terminal-centric. Unix keys in the terminal, Vim keys everywhere else.
 
 ## Core Stack
 
@@ -8,9 +8,10 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 * **Shell:** `zsh` with a minimal set of modern efficiency plugins. `fd`, `fzf`, `ripgrep` and `zoxide` integration for fast navigation. Unobtrusive Pure prompt.
 * **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum. JetBrains Mono.
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
-* **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS. Recently rebuilt from kickstart and comprehensively extended.\
-  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, some on-demand utils)
-* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `hyprdynamicmonitors`/`kanshi` and `pass` on Linux.
+* **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS.\
+  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, codecompanion, lazy-loaded utils)
+* **Input:** `keyd` on Linux for system-wide modifier normalization, remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
+* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `pass` on Linux.
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 

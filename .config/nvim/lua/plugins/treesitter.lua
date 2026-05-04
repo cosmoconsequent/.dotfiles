@@ -2,13 +2,15 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    main = "nvim-treesitter.configs",
+    main = "nvim-treesitter.config",
     opts = {
       ensure_installed = {
         "c",
         "cpp",
         "diff",
         "go",
+        "html",
+        "latex",
         "lua",
         "luadoc",
         "markdown",
@@ -18,6 +20,7 @@ return {
         "rust",
         "vim",
         "vimdoc",
+        "yaml",
       },
       auto_install = true,
       highlight = {
@@ -68,7 +71,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require("nvim-treesitter.config").setup({
         textobjects = {
           select = {
             enable = true,
