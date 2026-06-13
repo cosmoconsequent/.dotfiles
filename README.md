@@ -4,14 +4,14 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 
 ## Core Stack
 
-* **Window Manager:** `hyprland` on Arch and `sway` on Debian/Ubuntu, for simplicity and speed on Wayland. Server-like Waybar. Aerospace on MacOS. i3-like keybindings.
+* **Window Manager:** `hyprland` on Arch and `sway` on Debian/Ubuntu, for simplicity and speed on Wayland. Server-like Waybar. Aerospace on macOS. i3-like keybindings.
 * **Shell:** `zsh` with a minimal set of modern efficiency plugins. `fd`, `fzf`, `ripgrep` and `zoxide` integration for fast navigation. Unobtrusive Pure prompt.
 * **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum. JetBrains Mono.
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
 * **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS.\
   (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, codecompanion, lazy-loaded utils)
 * **Input:** `keyd` on Linux for system-wide modifier normalization, remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
-* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed. `pass` on Linux.
+* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed.
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 
@@ -26,7 +26,7 @@ git clone --bare https://github.com/cosmoconsequent/.dotfiles.git $HOME/.dotfile
 Then run the following in tty / terminal emulator:
 
 ```sh
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 config config --local status.showUntrackedFiles no
 ```
 
@@ -36,7 +36,7 @@ Then checkout the files for Linux (Arch, Debian/Ubuntu):
 config checkout linux
 ```
 
-Or MacOS:
+Or macOS:
 
 ```sh
 config checkout macos
