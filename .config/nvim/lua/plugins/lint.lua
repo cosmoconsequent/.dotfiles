@@ -4,29 +4,11 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local lint = require("lint")
-      lint.linters.clangtidy.args = { "-std=c17", "-std=c++20", "--" }
-      lint.linters.luacheck.args = { "--globals", "vim", "--" }
+      -- c/cpp via clangd (--clang-tidy); rust via rust_analyzer (clippy);
+      -- python/js/ts/css/json via LSP; lua via lua_ls; sh via bashls (shellcheck)
       lint.linters_by_ft = {
-        -- core
-        c = { "clangtidy" },
-        cpp = { "clangtidy" },
-        rust = { "clippy" },
         go = { "golangcilint" },
-        -- python via ruff lsp
-        -- web
-        javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        typescriptreact = { "eslint_d" },
-        html = { "htmlhint" },
-        css = { "stylelint" },
-        scss = { "stylelint" },
-        less = { "stylelint" },
-        -- other
-        lua = { "luacheck" },
-        sh = { "shellcheck" },
         markdown = { "markdownlint-cli2" },
-        json = { "jsonlint" },
         yaml = { "yamllint" },
         dockerfile = { "hadolint" },
       }

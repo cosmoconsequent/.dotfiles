@@ -15,6 +15,33 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 
+## Editor Toolchain
+
+`nvim` language support is installed via `mason` and wired through `nvim-lspconfig`,
+`nvim-lint`, `conform`, `nvim-dap` and `neotest`:
+
+| Language | LSP | Lint | Format | Debug | Test |
+| --- | --- | --- | --- | --- | --- |
+| Bash | `bashls` | `shellcheck` | `shfmt` | `bash-debug-adapter` | |
+| C / C++ | `clangd` | `clang-tidy` | `clang-format` | `codelldb` | `gtest` |
+| Rust | `rust_analyzer` | `clippy` | `rustfmt` | `codelldb` | `cargo test` |
+| Go | `gopls` | `golangci-lint` | `goimports` | `delve` | `go test` |
+| Lua | `lua_ls` | `lua_ls` | `stylua` | | |
+| Python | `pyrefly` · `ruff` | `ruff` | `ruff` | `debugpy` | `pytest` |
+| JS / TS / JSX / TSX | `tsgo` · `biome` | `biome` | `biome` | `js-debug-adapter` | `jest` |
+| HTML | `html` | `html` | `html` | | |
+| CSS | `cssls` · `biome` | `biome` | `biome` | | |
+| JSON | `jsonls` · `biome` | `biome` | `biome` | | |
+| YAML | `yamlls` | `yamllint` | `yamlfmt` | | |
+| TOML | `taplo` | `taplo` | `taplo` | | |
+| Markdown | `marksman` | `markdownlint-cli2` | `markdownlint-cli2` | | |
+| Dockerfile | `dockerls` | `hadolint` | | | |
+| XML | | | `xmlformatter` | | |
+
+`clang-tidy`, `clippy` and `shellcheck` run inside their language servers.
+HTML formatting falls through to the language server.
+CSS and JSON pair spec/schema server with `biome` for lint and format.
+
 ## Installation
 
 To use these dotfiles, clone as a bare repo:

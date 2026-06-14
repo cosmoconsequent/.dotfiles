@@ -2,8 +2,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { "williamboman/mason.nvim", opts = {} },
-      "williamboman/mason-lspconfig.nvim",
+      { "mason-org/mason.nvim", opts = {} },
+      "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
 
       { "j-hui/fidget.nvim", opts = {} },
@@ -41,6 +41,17 @@ return {
           end
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+          -- conform owns formatting; keep biome out of the LSP format-fallback path
+          if client and client.name == "biome" then
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end
+          -- defer hover to the type checker
+          if client and client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false
+          end
+
           if
             client
             and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
@@ -95,22 +106,33 @@ return {
         },
       })
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
       local servers = {
         -- core
         clangd = {
+          cmd = { "clangd", "--clang-tidy" },
           init_options = {
-            fallbackFlags = { "-std=c17", "-std=c++20" },
+            fallbackFlags = { "-std=c23", "-std=c++23" },
           },
         },
-        rust_analyzer = {},
+        rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              check = { command = "clippy" },
+            },
+          },
+        },
         gopls = {},
-        pyright = {},
+        pyrefly = {},
         ruff = {},
         -- web
-        ts_ls = {},
+        tsgo = {},
+        biome = {
+          -- attach without requiring a project biome.json
+          workspace_required = false,
+          root_dir = function(bufnr, on_dir)
+            on_dir(vim.fs.root(bufnr, { ".git", "package.json", "biome.json", "biome.jsonc" }) or vim.fn.getcwd())
+          end,
+        },
         html = {},
         cssls = {},
         -- other
@@ -142,31 +164,33 @@ return {
           },
         },
         dockerls = {},
+        taplo = {},
+        marksman = {},
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
+      local server_names = vim.tbl_keys(servers)
+
+      vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
+      for name, cfg in pairs(servers) do
+        vim.lsp.config(name, cfg)
+      end
+
+      local ensure_installed = vim.list_extend(vim.deepcopy(server_names), {
         -- formatters --
         "clang-format",
         -- rustfmt via rustup
         "goimports",
-        "prettierd",
-        "prettier",
         "stylua",
         "shfmt",
         "markdownlint-cli2",
+        "yamlfmt",
         "xmlformatter",
 
         -- linters --
-        -- clang-tidy via llvm
-        -- clippy via rustup
+        -- clang-tidy via clangd
+        -- clippy via rust_analyzer
         "golangci-lint",
-        "eslint_d",
-        "htmlhint",
-        "stylelint", -- css
-        "luacheck",
-        "shellcheck",
-        "jsonlint",
+        "shellcheck", -- consumed by bashls
         "yamllint",
         "hadolint",
       })
@@ -174,15 +198,7 @@ return {
 
       require("mason-lspconfig").setup({
         ensure_installed = {}, -- installed via mason-tool-installer
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- LS configuration overrides
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-            require("lspconfig")[server_name].setup(server)
-          end,
-        },
+        automatic_enable = server_names,
       })
     end,
   },

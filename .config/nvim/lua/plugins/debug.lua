@@ -10,10 +10,11 @@ return {
 
       {
         "igorlfs/nvim-dap-view",
-        opts = {},
-        windows = {
-          terminal = {
-            hide = { "go" },
+        opts = {
+          windows = {
+            terminal = {
+              hide = { "go" },
+            },
           },
         },
       },

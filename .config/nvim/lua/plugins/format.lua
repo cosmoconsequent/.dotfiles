@@ -4,23 +4,22 @@ local formatters_by_ft = {
   cpp = { "clang-format" },
   rust = { "rustfmt" },
   go = { "goimports" },
-  python = { "ruff" },
-  -- web
-  javascript = { "prettierd", "prettier", stop_after_first = true },
-  typescript = { "prettierd", "prettier", stop_after_first = true },
-  javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-  typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-  html = { "prettierd", "prettier", stop_after_first = true },
-  css = { "prettierd", "prettier", stop_after_first = true },
-  scss = { "prettierd", "prettier", stop_after_first = true },
-  less = { "prettierd", "prettier", stop_after_first = true },
+  python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
+  -- web (html falls back to LSP format)
+  javascript = { "biome-check" },
+  typescript = { "biome-check" },
+  javascriptreact = { "biome-check" },
+  typescriptreact = { "biome-check" },
+  css = { "biome-check" },
+  json = { "biome-check" },
+  jsonc = { "biome-check" },
   -- other
   lua = { "stylua" },
   sh = { "shfmt" },
   markdown = { "markdownlint-cli2" },
-  json = { "prettierd", "prettier", stop_after_first = true },
+  toml = { "taplo" },
   xml = { "xmlformatter" },
-  yaml = { "prettierd", "prettier", stop_after_first = true },
+  yaml = { "yamlfmt" },
 }
 
 -- only LSP format when there's no dedicated formatter
