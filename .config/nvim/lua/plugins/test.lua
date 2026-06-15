@@ -21,14 +21,7 @@ return {
           require("neotest-rust"),
           require("neotest-golang"),
           require("neotest-python"),
-          require("neotest-jest")({
-            jestCommand = "npm test --",
-            jestConfigFile = "custom.jest.config.ts",
-            env = { CI = true },
-            cwd = function(_) -- path
-              return vim.fn.getcwd()
-            end,
-          }),
+          require("neotest-jest"),
         },
       })
     end,

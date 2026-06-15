@@ -14,7 +14,6 @@ require("lazy").setup({
     enabled = true,
     notify = false,
   },
-}, {
   ui = {
     icons = {
       cmd = "⌘",
