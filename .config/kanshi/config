@@ -2,6 +2,7 @@ output "LG Electronics LG ULTRAGEAR 306NTDV4P106" {
   mode 3440x1440
   position 0,0
   scale 1
+  adaptive_sync on
   alias $LG34
 }
 
@@ -9,6 +10,7 @@ output "Lenovo Group Limited N160JCA-GT1" {
   mode 1920x1080
   position 3440,480
   scale 1.25
+  adaptive_sync on
   alias $INTERNAL
 }
 

@@ -1,1 +1,73 @@
-@theme "Arc-Dark"
+* {
+    bg:     #181818;
+    fg:     #d8d8d8;
+    fg-dim: #8e8e93;
+    sel-bg: #303030;
+
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+configuration {
+    show-icons: false;
+}
+
+window {
+    background-color: @bg;
+    border:           0;
+    padding:          12px;
+    width:            40%;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing:  8px;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    spacing:  8px;
+    padding:  4px 0px;
+}
+
+prompt {
+    text-color: @fg-dim;
+}
+
+entry {
+    text-color:        @fg;
+    placeholder:       "";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    lines:     12;
+    scrollbar: false;
+    spacing:   2px;
+}
+
+element {
+    padding: 6px 10px;
+}
+
+element normal normal,
+element normal active,
+element normal urgent,
+element alternate normal,
+element alternate active,
+element alternate urgent {
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+element selected normal,
+element selected active,
+element selected urgent {
+    background-color: @sel-bg;
+    text-color:       @fg;
+}
+
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
