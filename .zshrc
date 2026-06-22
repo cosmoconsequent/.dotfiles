@@ -3,7 +3,7 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 
-setopt HIST_IGNORE_ALL_DUPS
+setopt INC_APPEND_HISTORY HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_IGNORE_SPACE
 
 bindkey -e
 bindkey '^[[3~' delete-char
@@ -19,9 +19,7 @@ prompt pure
 
 # completions
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-autoload -Uz compinit; compinit
-
-[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+autoload -Uz compinit; compdump=($HOME/.zcompdump(Nmh-24)); (( $#compdump )) && compinit -C || compinit
 
 # plugins
 load_plugin() {
@@ -63,12 +61,17 @@ if command -v fzf >/dev/null 2>&1; then
     export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 fi
 
+if command -v fnm >/dev/null 2>&1; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
+    eval "$(fnm completions --shell zsh)"
+fi
+
 mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
 function config {
-    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
+    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" "$@"
 }
 
 # aliases
@@ -92,7 +95,7 @@ if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
 fi
 
 if [[ ( -n "$DISPLAY" || -n "$TERM_PROGRAM" ) && -z "$TMUX" ]]; then
-    tmux has -t main 2>/dev/null && tmux a -t main || tmux new -t main
+    tmux has -t main 2>/dev/null && tmux a -t main || tmux new -s main
 fi
 
 true

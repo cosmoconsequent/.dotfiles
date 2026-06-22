@@ -16,7 +16,4 @@ fi
 
 [[ -d /usr/local/go/bin ]] && export PATH="/usr/local/go/bin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
-
 true

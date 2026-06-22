@@ -45,12 +45,12 @@ return {
         cmd = copilot_default,
         background = copilot_default,
         cli = {
-          agent = "gemini_cli",
+          agent = "antigravity",
           agents = {
-            gemini_cli = {
-              cmd = "gemini",
+            antigravity = {
+              cmd = "agy",
               args = {},
-              description = "Gemini CLI",
+              description = "Antigravity CLI",
               provider = "terminal",
             },
           },

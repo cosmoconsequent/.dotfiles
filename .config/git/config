@@ -9,8 +9,12 @@
 	navigate = true
 	line-numbers = true
 	syntax-theme = kanagawa
+[diff]
+	algorithm = histogram
 [merge]
 	conflictStyle = zdiff3
+[rerere]
+	enabled = true
 [credential]
 	helper = cache
 	helper = !type pass-git-helper >/dev/null 2>&1 && pass-git-helper $@
