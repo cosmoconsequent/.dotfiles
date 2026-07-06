@@ -19,14 +19,14 @@
 	helper = cache
 	helper = !type pass-git-helper >/dev/null 2>&1 && pass-git-helper $@
 	helper = !test -x $(git --exec-path)/git-credential-osxkeychain && $(git --exec-path)/git-credential-osxkeychain $@
-[include]
-	path = ~/.config/git/config.local
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !gh auth git-credential
 [credential "https://gitlab.com"]
-	helper = 
+	helper =
 	helper = !glab auth git-credential
+[include]
+	path = ~/.config/git/config.local

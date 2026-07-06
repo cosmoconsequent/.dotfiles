@@ -72,6 +72,16 @@ return {
             "2",
           },
         },
+        -- 2-space indent for config-less projects; a project biome.json overrides
+        ["biome-check"] = {
+          args = function(_, ctx)
+            local args = { "check", "--write", "--stdin-file-path", ctx.filename }
+            if not vim.fs.root(ctx.filename, { "biome.json", "biome.jsonc" }) then
+              table.insert(args, 2, "--indent-style=space")
+            end
+            return args
+          end,
+        },
       },
     },
   },
