@@ -231,20 +231,20 @@ bindsym $mod+Shift+s exec 'grim -g "$(slurp)" - | wl-copy'
 
 bindsym --locked XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym --locked XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-bindsym --locked XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym --locked XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked --no-repeat XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked --no-repeat XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym --locked $mod+m exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym --locked $mod+comma exec --no-startup-id wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-bindsym --locked $mod+period exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym --locked $mod+slash exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bindsym --locked $mod+apostrophe exec --no-startup-id playerctl play-pause
+bindsym --locked --no-repeat $mod+semicolon exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked --no-repeat $mod+slash exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked --no-repeat $mod+apostrophe exec --no-startup-id playerctl play-pause
 
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl -e4 -n2 set 5%-
 bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl -e4 -n2 set 5%+
 
-bindsym --locked XF86AudioPause exec --no-startup-id playerctl play-pause
-bindsym --locked XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym --locked XF86AudioNext exec --no-startup-id playerctl next
-bindsym --locked XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym --locked --no-repeat XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym --locked --no-repeat XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym --locked --no-repeat XF86AudioNext exec --no-startup-id playerctl next
+bindsym --locked --no-repeat XF86AudioPrev exec --no-startup-id playerctl previous
 
 exec --no-startup-id swaymsg "workspace 2; exec ghostty"
