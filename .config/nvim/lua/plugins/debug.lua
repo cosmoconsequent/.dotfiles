@@ -178,6 +178,13 @@ return {
         desc = "[D]ebug: Step [O]ver",
       },
       {
+        "<C-n>",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "[D]ebug: Step [O]ver (repeat)",
+      },
+      {
         "<leader>di",
         function()
           require("dap").step_into()

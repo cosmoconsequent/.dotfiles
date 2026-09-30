@@ -125,7 +125,7 @@ return {
         pyrefly = {},
         ruff = {},
         -- web
-        tsgo = {},
+        tsc = {},
         biome = {
           -- attach without requiring a project biome.json
           workspace_required = false,
