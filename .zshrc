@@ -50,21 +50,16 @@ export GPG_TTY="$(tty)" # pass-git-helper
 [[ -S "$XDG_RUNTIME_DIR/ssh-agent.socket" ]] && \
     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
-fi
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
-if command -v fzf >/dev/null 2>&1; then
+if command -v fzf &>/dev/null; then
     source <(fzf --zsh)
     export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 fi
 
-if command -v fnm >/dev/null 2>&1; then
-    eval "$(fnm env --use-on-cd --shell zsh)"
-    eval "$(fnm completions --shell zsh)"
-fi
+command -v fnm &>/dev/null && eval "$(fnm completions --shell zsh)"
 
 mkcd() {
     mkdir -p "$1" && cd "$1"
@@ -87,9 +82,9 @@ alias gl='git log --oneline --graph --decorate'
 
 # startup
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
-    if command -v start-hyprland >/dev/null 2>&1; then
+    if command -v start-hyprland &>/dev/null; then
         exec start-hyprland
-    elif command -v sway >/dev/null 2>&1; then
+    elif command -v sway &>/dev/null; then
         exec sway
     fi
 fi
