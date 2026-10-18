@@ -39,3 +39,18 @@ vim.opt.timeoutlen = 500 -- default 1000
 vim.opt.undofile = true
 
 vim.opt.confirm = true
+
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+vim.filetype.add({
+  pattern = {
+    ["compose%..*ya?ml"] = "yaml.docker-compose",
+    ["docker%-compose%..*ya?ml"] = "yaml.docker-compose",
+  },
+  extension = {
+    tf = "terraform",
+  },
+})

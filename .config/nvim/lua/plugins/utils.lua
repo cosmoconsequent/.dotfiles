@@ -11,6 +11,8 @@ return {
   },
 
   -- editing enhancements
+  "tpope/vim-sleuth",
+
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
@@ -31,45 +33,20 @@ return {
     end,
   },
 
-  -- visual utils
   {
-    "nvim-lualine/lualine.nvim",
+    "HakonHarnes/img-clip.nvim",
     opts = {
-      options = {
-        icons_enabled = false,
-        component_separators = "",
-        section_separators = "",
-      },
-      sections = {
-        lualine_a = {},
-        lualine_b = {
-          { "filename", path = 1 },
-          "branch",
-          "diff",
-          { "diagnostics", colored = false },
+      filetypes = {
+        codecompanion = {
+          prompt_for_file_name = false,
+          template = "[Image]($FILE_PATH)",
+          use_absolute_path = true,
         },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {
-          "filetype",
-          { "encoding", show_bomb = true },
-          "lsp_status",
-          "location",
-          "progress",
-        },
-        lualine_z = {},
       },
     },
-  },
-
-  {
-    "stevearc/aerial.nvim",
-    opts = {},
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("aerial").setup()
-      vim.keymap.set("n", "<leader>co", "<cmd>AerialToggle!<CR>", { desc = "Toggle [C]ode [O]utline" })
-    end,
+    keys = {
+      { "<leader>i", "<cmd>PasteImage<cr>", mode = "n", desc = "Paste [I]mage from clipboard" },
+    },
   },
 
   {
@@ -116,6 +93,47 @@ return {
     },
   },
 
+  -- visual utils
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        icons_enabled = false,
+        component_separators = "",
+        section_separators = "",
+      },
+      sections = {
+        lualine_a = {},
+        lualine_b = {
+          { "filename", path = 1 },
+          "branch",
+          "diff",
+          { "diagnostics", colored = false },
+        },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {
+          "filetype",
+          { "encoding", show_bomb = true },
+          "lsp_status",
+          "location",
+          "progress",
+        },
+        lualine_z = {},
+      },
+    },
+  },
+
+  {
+    "stevearc/aerial.nvim",
+    opts = {},
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("aerial").setup()
+      vim.keymap.set("n", "<leader>co", "<cmd>AerialToggle!<CR>", { desc = "Toggle [C]ode [O]utline" })
+    end,
+  },
+
   {
     "folke/zen-mode.nvim",
     config = function()
@@ -152,9 +170,16 @@ return {
   },
 
   {
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = { signs = false },
+  },
+
+  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "markdown", "codecompanion" },
+    ft = { "markdown" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -167,21 +192,5 @@ return {
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
     build = ":call mkdp#util#install()",
-  },
-
-  {
-    "HakonHarnes/img-clip.nvim",
-    opts = {
-      filetypes = {
-        codecompanion = {
-          prompt_for_file_name = false,
-          template = "[Image]($FILE_PATH)",
-          use_absolute_path = true,
-        },
-      },
-    },
-    keys = {
-      { "<leader>i", "<cmd>PasteImage<cr>", mode = "n", desc = "Paste [I]mage from clipboard" },
-    },
   },
 }

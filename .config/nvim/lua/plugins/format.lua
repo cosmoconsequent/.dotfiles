@@ -1,25 +1,27 @@
 local formatters_by_ft = {
-  -- core
   c = { "clang-format" },
   cpp = { "clang-format" },
+  cmake = { "gersemi" },
   rust = { "rustfmt" },
   go = { "goimports" },
   python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
-  -- web (html falls back to LSP format)
+  lua = { "stylua" },
+  sh = { "shfmt" },
   javascript = { "biome-check" },
   typescript = { "biome-check" },
   javascriptreact = { "biome-check" },
   typescriptreact = { "biome-check" },
+  -- html falls back to LSP format
   css = { "biome-check" },
   json = { "biome-check" },
   jsonc = { "biome-check" },
-  -- other
-  lua = { "stylua" },
-  sh = { "shfmt" },
-  markdown = { "markdownlint-cli2" },
-  toml = { "taplo" },
-  xml = { "xmlformatter" },
   yaml = { "yamlfmt" },
+  proto = { "buf" },
+  toml = { "tombi" },
+  dockerfile = { "dockerfmt" },
+  terraform = { "tofu_fmt" },
+  ["terraform-vars"] = { "tofu_fmt" },
+  markdown = { "markdownlint-cli2" },
 }
 
 -- only LSP format when there's no dedicated formatter
@@ -35,8 +37,6 @@ local lsp_fallback = function(bufnr)
 end
 
 return {
-  "tpope/vim-sleuth",
-
   {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
@@ -84,12 +84,5 @@ return {
         },
       },
     },
-  },
-
-  {
-    "folke/todo-comments.nvim",
-    event = "VimEnter",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = { signs = false },
   },
 }

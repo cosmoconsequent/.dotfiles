@@ -9,7 +9,7 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 * **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum. JetBrains Mono.
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
 * **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS.\
-  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, codecompanion, lazy-loaded utils)
+  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, claudecode, lazy-loaded utils)
 * **Input:** `keyd` on Linux for system-wide modifier normalization, remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
 * **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed.
 
@@ -17,30 +17,29 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 
 ## Editor Toolchain
 
-`nvim` language support is installed via `mason` and wired through `nvim-lspconfig`,
-`nvim-lint`, `conform`, `nvim-dap` and `neotest`:
-
-| Language | LSP | Lint | Format | Debug | Test |
+| Language | LSP | Lint / Diag | Format | Debug | Test |
 | --- | --- | --- | --- | --- | --- |
-| Bash | `bashls` | `shellcheck` | `shfmt` | `bash-debug-adapter` | |
-| C / C++ | `clangd` | `clang-tidy` | `clang-format` | `codelldb` | `gtest` |
+| C/C++ | `clangd` | `clang-tidy` | `clang-format` | `codelldb` | `gtest` |
+| CMake | `neocmake` | `neocmake` | `gersemi` | | |
 | Rust | `rust_analyzer` | `clippy` | `rustfmt` | `codelldb` | `cargo test` |
 | Go | `gopls` | `golangci-lint` | `goimports` | `delve` | `go test` |
+| Python | `pyrefly` | `ruff` | `ruff` | `debugpy` | `pytest` |
 | Lua | `lua_ls` | `lua_ls` | `stylua` | | |
-| Python | `pyrefly` · `ruff` | `ruff` | `ruff` | `debugpy` | `pytest` |
-| JS / TS / JSX / TSX | `tsgo` · `biome` | `biome` | `biome` | `js-debug-adapter` | `jest` |
+| Bash | `bashls` | `shellcheck` | `shfmt` | `bash-debug-adapter` | |
+| JS / TS / JSX / TSX | `tsc` | `biome` | `biome` | `js-debug-adapter` | `jest` |
 | HTML | `html` | `html` | `html` | | |
-| CSS | `cssls` · `biome` | `biome` | `biome` | | |
-| JSON | `jsonls` · `biome` | `biome` | `biome` | | |
+| CSS | `cssls` | `biome` | `biome` | | |
+| JSON | `jsonls` | `biome` | `biome` | | |
+| Protobuf | `buf_ls` | `buf_ls` | `buf` | | |
 | YAML | `yamlls` | `yamllint` | `yamlfmt` | | |
-| TOML | `taplo` | `taplo` | `taplo` | | |
+| TOML | `tombi` | `tombi` | `tombi` | | |
+| Dockerfile | `docker_language_server` | `hadolint` | `dockerfmt` | | |
+| Terraform / OpenTofu | `tofu_ls` | `tflint` | `tofu` | | |
 | Markdown | `marksman` | `markdownlint-cli2` | `markdownlint-cli2` | | |
-| Dockerfile | `dockerls` | `hadolint` | | | |
-| XML | | | `xmlformatter` | | |
 
-`clang-tidy`, `clippy` and `shellcheck` run inside their language servers.
-HTML formatting falls through to the language server.
-CSS and JSON pair spec/schema server with `biome` for lint and format.
+Most LSP servers are mason-managed. System-installed exceptions: C/C++, Rust, Protobuf, TOML.\
+Most linters/diagnostics and formatters are system-installed. Mason-managed exceptions: CMake (diag), Lua (diag), HTML (diag, format).\
+All debug servers are mason-managed.
 
 ## Installation
 

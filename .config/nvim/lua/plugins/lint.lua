@@ -1,16 +1,35 @@
 return {
+  -- diagnostics via LSP, not nvim-lint:
+  -- system --
+  -- c/cpp: clangd (clang-tidy)
+  -- rust: rust-analyzer (clippy)
+  -- shell: shellcheck (via bashls)
+  -- protobuf: buf
+  -- toml: tombi
+  -- mason --
+  -- cmake: neocmake
+  -- lua: lua_ls
+  -- html: html
+
   {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local lint = require("lint")
-      -- c/cpp via clangd (--clang-tidy); rust via rust_analyzer (clippy);
-      -- python/js/ts/css/json via LSP; lua via lua_ls; sh via bashls (shellcheck)
       lint.linters_by_ft = {
         go = { "golangcilint" },
-        markdown = { "markdownlint-cli2" },
+        python = { "ruff" },
+        javascript = { "biomejs" },
+        typescript = { "biomejs" },
+        javascriptreact = { "biomejs" },
+        typescriptreact = { "biomejs" },
+        css = { "biomejs" },
+        json = { "biomejs" },
+        jsonc = { "biomejs" },
         yaml = { "yamllint" },
         dockerfile = { "hadolint" },
+        terraform = { "tflint" },
+        markdown = { "markdownlint-cli2" },
       }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

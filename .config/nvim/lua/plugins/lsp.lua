@@ -42,16 +42,6 @@ return {
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-          -- conform owns formatting; keep biome out of the LSP format-fallback path
-          if client and client.name == "biome" then
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
-          end
-          -- defer hover to the type checker
-          if client and client.name == "ruff" then
-            client.server_capabilities.hoverProvider = false
-          end
-
           if
             client
             and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
@@ -107,13 +97,12 @@ return {
       })
 
       local servers = {
-        -- core
         clangd = {
-          cmd = { "clangd", "--clang-tidy" },
           init_options = {
             fallbackFlags = { "-std=c23", "-std=c++23" },
           },
         },
+        neocmake = {},
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
@@ -123,19 +112,6 @@ return {
         },
         gopls = {},
         pyrefly = {},
-        ruff = {},
-        -- web
-        tsc = {},
-        biome = {
-          -- attach without requiring a project biome.json
-          workspace_required = false,
-          root_dir = function(bufnr, on_dir)
-            on_dir(vim.fs.root(bufnr, { ".git", "package.json", "biome.json", "biome.jsonc" }) or vim.fn.getcwd())
-          end,
-        },
-        html = {},
-        cssls = {},
-        -- other
         lua_ls = {
           settings = {
             Lua = {
@@ -147,6 +123,9 @@ return {
           },
         },
         bashls = {},
+        tsc = {},
+        html = {},
+        cssls = {},
         jsonls = {
           settings = {
             json = {
@@ -163,43 +142,38 @@ return {
             },
           },
         },
-        dockerls = {},
-        taplo = {},
+        buf_ls = {},
+        tombi = {},
+        docker_language_server = {
+          init_options = {
+            telemetry = "off",
+          },
+        },
+        tofu_ls = {
+          filetypes = { "terraform", "terraform-vars" },
+        },
         marksman = {},
       }
-
-      local server_names = vim.tbl_keys(servers)
 
       vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
       for name, cfg in pairs(servers) do
         vim.lsp.config(name, cfg)
       end
 
-      local ensure_installed = vim.list_extend(vim.deepcopy(server_names), {
-        -- formatters --
-        "clang-format",
-        -- rustfmt via rustup
-        "goimports",
-        "stylua",
-        "shfmt",
-        "markdownlint-cli2",
-        "yamlfmt",
-        "xmlformatter",
-
-        -- linters --
-        -- clang-tidy via clangd
-        -- clippy via rust_analyzer
-        "golangci-lint",
-        "shellcheck", -- consumed by bashls
-        "yamllint",
-        "hadolint",
-      })
-      require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+      local server_names = vim.tbl_keys(servers)
+      vim.lsp.enable(server_names) -- enable all servers
 
       require("mason-lspconfig").setup({
         ensure_installed = {}, -- installed via mason-tool-installer
-        automatic_enable = server_names,
+        automatic_enable = false,
       })
+
+      -- exclude system installs from mason installer
+      local excluded = { clangd = true, rust_analyzer = true, buf_ls = true, tombi = true }
+      local mason_servers = vim.tbl_filter(function(server)
+        return not excluded[server]
+      end, server_names)
+      require("mason-tool-installer").setup({ ensure_installed = mason_servers })
     end,
   },
 }
