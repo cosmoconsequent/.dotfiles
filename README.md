@@ -1,17 +1,23 @@
 # Dotfiles
 
-Designed to be simple, efficient, performant and stay out of the way. Keyboard and terminal-centric. Unix keys in the terminal, Vim keys everywhere else.
+Designed to be simple, efficient, performant and stay out of the way. Keyboard and terminal-centric.
+Unix keys in the terminal, Vim keys everywhere else.
 
 ## Core Stack
 
-* **Window Manager:** `hyprland` on Arch and `sway` on Debian/Ubuntu, for simplicity and speed on Wayland. Server-like Waybar. Aerospace on macOS. i3-like keybindings.
-* **Shell:** `zsh` with a minimal set of modern efficiency plugins. `fd`, `fzf`, `ripgrep` and `zoxide` integration for fast navigation. Unobtrusive Pure prompt.
-* **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum. JetBrains Mono.
+* **Window Manager:** `hyprland` on Arch and `sway` on Debian/Ubuntu, for simplicity and speed on Wayland.
+  Server-like Waybar. Aerospace on macOS. i3-like keybindings.
+* **Shell:** `zsh` with a minimal set of modern efficiency plugins.
+  `fd`, `fzf`, `ripgrep` and `zoxide` integration for fast navigation. Unobtrusive Pure prompt.
+* **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum.
+  JetBrains Mono.
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
 * **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS.\
-  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lint, conform, nvim-lspconfig, nvim-dap, neotest, vim-fugitive, gitsigns, claudecode, lazy-loaded utils)
-* **Input:** `keyd` on Linux for system-wide modifier normalization, remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
-* **Extras:** Kanagawa theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed.
+  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lspconfig, rustaceanvim, nvim-lint, conform, nvim-dap, neotest,
+  vim-fugitive, gitsigns, claudecode, lazy-loaded utils)
+* **Input:** `keyd` on Linux for system-wide modifier normalization,
+  remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
+* **Extras:** Kanagawa Wave theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed.
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 
@@ -19,14 +25,14 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 
 | Language | LSP | Lint / Diag | Format | Debug | Test |
 | --- | --- | --- | --- | --- | --- |
-| C/C++ | `clangd` | `clang-tidy` | `clang-format` | `codelldb` | `gtest` |
+| C/C++ | `clangd` | `clang-tidy` | `clang-format` | `lldb-dap` | `gtest` |
 | CMake | `neocmake` | `neocmake` | `gersemi` | | |
-| Rust | `rust_analyzer` | `clippy` | `rustfmt` | `codelldb` | `cargo test` |
+| Rust | `rust-analyzer` | `clippy` | `rustfmt` | `codelldb` | `nextest` |
 | Go | `gopls` | `golangci-lint` | `goimports` | `delve` | `go test` |
 | Python | `pyrefly` | `ruff` | `ruff` | `debugpy` | `pytest` |
 | Lua | `lua_ls` | `lua_ls` | `stylua` | | |
-| Bash | `bashls` | `shellcheck` | `shfmt` | `bash-debug-adapter` | |
-| JS / TS / JSX / TSX | `tsc` | `biome` | `biome` | `js-debug-adapter` | `jest` |
+| Bash | `bashls` | `shellcheck` | `shfmt` | | |
+| JS / JSX / TS / TSX | `tsc` | `biome` | `biome` | `js-debug-adapter` | `jest` / `vitest` |
 | HTML | `html` | `html` | `html` | | |
 | CSS | `cssls` | `biome` | `biome` | | |
 | JSON | `jsonls` | `biome` | `biome` | | |
@@ -37,9 +43,14 @@ Designed to be simple, efficient, performant and stay out of the way. Keyboard a
 | Terraform / OpenTofu | `tofu_ls` | `tflint` | `tofu` | | |
 | Markdown | `marksman` | `markdownlint-cli2` | `markdownlint-cli2` | | |
 
-Most LSP servers are mason-managed. System-installed exceptions: C/C++, Rust, Protobuf, TOML.\
-Most linters/diagnostics and formatters are system-installed. Mason-managed exceptions: CMake (diag), Lua (diag), HTML (diag, format).\
-All debug servers are mason-managed.
+Most LSP servers are mason-managed. System-installed exceptions: C/C++, Rust, Protobuf, TOML.
+
+Mason LSP servers which also provide diagnostics or formatting: CMake (diag), Lua (diag), HTML (diag, format).\
+Remaining linters and formatters are system-installed.
+
+Most debug servers are mason-managed or project-installed / on-demand. System-installed exception: C/C++.
+
+Project-installed test frameworks / runners: C/C++, Python, JS / JSX / TS / TSX. System-installed: Rust, Go.
 
 ## Installation
 

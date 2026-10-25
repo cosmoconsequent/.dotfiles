@@ -23,100 +23,121 @@ return {
       local dap = require("dap")
 
       require("mason-nvim-dap").setup({
-        automatic_installation = true,
-        handlers = {},
         ensure_installed = {
-          "codelldb",
+          "codelldb", -- rust
           "delve",
-          "python",
           "js",
-          "bash",
         },
       })
 
-      -- c/c++/rust
-      dap.adapters.codelldb = {
+      -- c/c++
+      dap.adapters["lldb-dap"] = {
         type = "executable",
-        command = "codelldb",
+        command = "lldb-dap",
       }
 
-      dap.configurations.cpp = {
+      local input_program = function()
+        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      end
+
+      dap.configurations.c = {
         {
           name = "Launch file",
-          type = "codelldb",
+          type = "lldb-dap",
           request = "launch",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          program = input_program,
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+        },
+        {
+          name = "Launch file (args)",
+          type = "lldb-dap",
+          request = "launch",
+          program = input_program,
+          args = function()
+            return require("dap.utils").splitstr(vim.fn.input("Args: "))
           end,
           cwd = "${workspaceFolder}",
-          stopOnEntry = false,
+          console = "integratedTerminal",
+        },
+        {
+          name = "Attach to process",
+          type = "lldb-dap",
+          request = "attach",
+          pid = require("dap.utils").pick_process,
+        },
+        {
+          name = "Load coredump",
+          type = "lldb-dap",
+          request = "attach",
+          program = input_program,
+          coreFile = function()
+            return vim.fn.input("Path to coredump file: ", vim.fn.getcwd() .. "/", "file")
+          end,
         },
       }
 
-      dap.configurations.c = dap.configurations.cpp
-      dap.configurations.rust = dap.configurations.cpp
+      dap.configurations.cpp = dap.configurations.c
+
+      -- rust via rustaceanvim
 
       -- go
       require("dap-go").setup()
 
       -- python
-      require("dap-python").setup("debugpy-adapter")
+      require("dap-python").setup("uv")
 
-      -- javascript/typescript
+      -- js / ts
       dap.adapters["pwa-node"] = {
         type = "server",
         host = "localhost",
         port = "${port}",
         executable = {
-          command = "node",
-          args = {
-            vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-            "${port}",
-          },
+          command = "js-debug-adapter",
+          args = { "${port}" },
         },
       }
 
+      dap.adapters["pwa-chrome"] = dap.adapters["pwa-node"]
+
       dap.configurations.javascript = {
         {
+          name = "Launch file",
           type = "pwa-node",
           request = "launch",
-          name = "Launch file",
           program = "${file}",
           cwd = "${workspaceFolder}",
+        },
+        {
+          name = "Attach to process",
+          type = "pwa-node",
+          request = "attach",
+          processId = function()
+            return require("dap.utils").pick_process({ filter = "node" })
+          end,
+        },
+        {
+          name = "Launch Chrome (port 5173)",
+          type = "pwa-chrome",
+          request = "launch",
+          url = "http://localhost:5173",
+          webRoot = "${workspaceFolder}",
+          sourceMaps = true,
+        },
+        -- google-chrome-stable --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
+        {
+          name = "Attach to Chrome (port 9222)",
+          type = "pwa-chrome",
+          request = "attach",
+          port = 9222,
+          webRoot = "${workspaceFolder}",
+          sourceMaps = true,
         },
       }
 
       dap.configurations.typescript = dap.configurations.javascript
-
-      -- bash
-      dap.adapters.bashdb = {
-        type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
-        name = "bashdb",
-      }
-
-      dap.configurations.sh = {
-        {
-          type = "bashdb",
-          request = "launch",
-          name = "Launch file",
-          showDebugOutput = true,
-          pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
-          pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
-          trace = true,
-          file = "${file}",
-          program = "${file}",
-          cwd = "${workspaceFolder}",
-          pathCat = "cat",
-          pathBash = "/bin/bash",
-          pathMkfifo = "mkfifo",
-          pathPkill = "pkill",
-          args = {},
-          argsString = "",
-          env = {},
-          terminalKind = "integrated",
-        },
-      }
+      dap.configurations.javascriptreact = dap.configurations.javascript
+      dap.configurations.typescriptreact = dap.configurations.javascript
 
       -- better breakpoints
       vim.api.nvim_set_hl(0, "DapBreak", { fg = "#e51400" })

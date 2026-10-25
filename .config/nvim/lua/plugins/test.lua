@@ -9,19 +9,21 @@ return {
 
       -- adapters
       "alfaix/neotest-gtest",
-      "rouge8/neotest-rust",
+      "mrcjkb/rustaceanvim",
       "fredrikaverpil/neotest-golang",
       "nvim-neotest/neotest-python",
       "nvim-neotest/neotest-jest",
+      "marilari88/neotest-vitest",
     },
     config = function()
       require("neotest").setup({
         adapters = {
           require("neotest-gtest").setup({}),
-          require("neotest-rust"),
+          require("rustaceanvim.neotest"),
           require("neotest-golang"),
           require("neotest-python"),
           require("neotest-jest"),
+          require("neotest-vitest"),
         },
       })
     end,

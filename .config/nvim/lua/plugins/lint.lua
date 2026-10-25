@@ -1,11 +1,13 @@
 return {
   -- diagnostics via LSP, not nvim-lint:
+
   -- system --
   -- c/cpp: clangd (clang-tidy)
   -- rust: rust-analyzer (clippy)
   -- shell: shellcheck (via bashls)
   -- protobuf: buf
   -- toml: tombi
+
   -- mason --
   -- cmake: neocmake
   -- lua: lua_ls

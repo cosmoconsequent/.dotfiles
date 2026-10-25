@@ -21,7 +21,7 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          -- accept 0.11 lsp keymaps, others updated to align:
+          -- 0.11 lsp keymaps plus others aligned:
           map("grd", vim.lsp.buf.definition, "[G]oto [R]efactor [D]efinition")
           map("grD", vim.lsp.buf.declaration, "[G]oto [R]efactor [D]eclaration")
           -- gri
@@ -103,13 +103,7 @@ return {
           },
         },
         neocmake = {},
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              check = { command = "clippy" },
-            },
-          },
-        },
+        -- rust-analyzer is managed by rustaceanvim
         gopls = {},
         pyrefly = {},
         lua_ls = {
@@ -149,9 +143,7 @@ return {
             telemetry = "off",
           },
         },
-        tofu_ls = {
-          filetypes = { "terraform", "terraform-vars" },
-        },
+        tofu_ls = {},
         marksman = {},
       }
 
@@ -169,11 +161,29 @@ return {
       })
 
       -- exclude system installs from mason installer
-      local excluded = { clangd = true, rust_analyzer = true, buf_ls = true, tombi = true }
+      local excluded = { clangd = true, buf_ls = true, tombi = true }
       local mason_servers = vim.tbl_filter(function(server)
         return not excluded[server]
       end, server_names)
       require("mason-tool-installer").setup({ ensure_installed = mason_servers })
+    end,
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    lazy = false,
+    init = function()
+      vim.g.rustaceanvim = {
+        server = {
+          default_settings = {
+            ["rust-analyzer"] = {
+              check = {
+                command = "clippy",
+              },
+            },
+          },
+        },
+      }
     end,
   },
 }
