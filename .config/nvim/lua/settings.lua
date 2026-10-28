@@ -33,7 +33,7 @@ vim.opt.smartcase = true
 
 vim.opt.inccommand = "split"
 
-vim.opt.updatetime = 50 -- default 4000
+vim.opt.updatetime = 250 -- default 4000
 vim.opt.timeoutlen = 500 -- default 1000
 
 vim.opt.undofile = true

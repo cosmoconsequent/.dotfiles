@@ -3,6 +3,7 @@ local ensure_installed = {
   "bash",
   "c",
   "cmake",
+  "comment",
   "cpp",
   "css",
   "cuda",

@@ -12,6 +12,7 @@ return {
         "igorlfs/nvim-dap-view",
         opts = {
           windows = {
+            size = 0.35,
             terminal = {
               hide = { "go" },
             },

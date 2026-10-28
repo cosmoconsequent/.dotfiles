@@ -20,9 +20,9 @@ return {
   },
 
   {
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.ai",
     config = function()
-      require("mini.ai").setup({ n_lines = 500 })
+      require("mini.ai").setup({ n_lines = 50 })
     end,
   },
 
@@ -35,15 +35,8 @@ return {
 
   {
     "HakonHarnes/img-clip.nvim",
-    opts = {
-      filetypes = {
-        codecompanion = {
-          prompt_for_file_name = false,
-          template = "[Image]($FILE_PATH)",
-          use_absolute_path = true,
-        },
-      },
-    },
+    event = "VeryLazy",
+    opts = {},
     keys = {
       { "<leader>i", "<cmd>PasteImage<cr>", mode = "n", desc = "Paste [I]mage from clipboard" },
     },
@@ -126,12 +119,11 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    opts = {},
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("aerial").setup()
-      vim.keymap.set("n", "<leader>co", "<cmd>AerialToggle!<CR>", { desc = "Toggle [C]ode [O]utline" })
-    end,
+    opts = {},
+    keys = {
+      { "<leader>co", "<cmd>AerialToggle!<CR>", desc = "Toggle [C]ode [O]utline" },
+    },
   },
 
   {
@@ -167,13 +159,6 @@ return {
         },
       })
     end,
-  },
-
-  {
-    "folke/todo-comments.nvim",
-    event = "VimEnter",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = { signs = false },
   },
 
   {

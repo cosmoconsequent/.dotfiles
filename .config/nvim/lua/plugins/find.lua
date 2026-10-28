@@ -43,7 +43,7 @@ return {
       vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
       vim.keymap.set("n", "<leader>fW", function()
         builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
-      end, { desc = "[F]ind current [W]ORD)" })
+      end, { desc = "[F]ind current [W]ORD" })
 
       vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]ind [D]iagnostics" })
 
@@ -87,7 +87,7 @@ return {
             },
           })
         end,
-        mode = { "n", "v" },
+        mode = { "n", "x" },
         desc = "[F]ind and [C]hange in project files",
       },
     },

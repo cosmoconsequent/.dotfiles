@@ -14,20 +14,20 @@ vim.keymap.set("n", "<C-b>", "<C-b>zz")
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("x", "<", "<gv")
+vim.keymap.set("x", ">", ">gv")
 
 vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "=ap", "mz=ap'z")
+vim.keymap.set("n", "=ap", "mz=ap`z")
 
 vim.keymap.set("x", "<leader>p", '"_dP')
-vim.keymap.set({ "n", "v" }, "<leader>x", '"_d') -- "discard" as black hole delete
+vim.keymap.set({ "n", "x" }, "<leader>x", '"_d') -- "discard" as black hole delete
 
-vim.keymap.set({ "n", "v" }, "<leader>v", "ggVG")
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
+vim.keymap.set({ "n", "x" }, "<leader>v", "ggVG")
+vim.keymap.set({ "n", "x" }, "<leader>y", '"+y')
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
@@ -37,11 +37,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.hl.on_yank()
   end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  desc = "Remove trailing whitespace when writing file",
-  group = vim.api.nvim_create_augroup("clear-whitespace", { clear = true }),
-  pattern = "*",
-  command = [[%s/\s\+$//e]],
 })

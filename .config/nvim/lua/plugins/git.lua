@@ -10,14 +10,7 @@ return {
       { "<leader>gC", "<cmd>Git commit -a<CR>", desc = "[G]it [C]ommit with add" },
       { "<leader>gm", "<cmd>Git commit --amend --no-edit<CR>", desc = "[G]it a[M]end last commit" },
       { "<leader>gp", "<cmd>Git push<CR>", desc = "[G]it [P]ush" },
-      {
-        "<leader>gt",
-        function()
-          local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
-          vim.cmd("Git push -u origin " .. branch)
-        end,
-        desc = "[G]it push set upstream [T]arget",
-      },
+      { "<leader>gt", "<cmd>Git push -u origin HEAD<CR>", desc = "[G]it push set upstream [T]arget" },
       { "<leader>gP", "<cmd>Git pull --rebase --autostash<CR>", desc = "[G]it [P]ull rebase autostash" },
       { "<leader>gr", "<cmd>Git reset HEAD %<CR>", desc = "[G]it [R]eset current file" },
       { "<leader>gu", "<cmd>Gedit<CR>", desc = "[G]it [U]ndo buffer to HEAD" },
@@ -25,8 +18,8 @@ return {
       -- diff
       { "<leader>gd", "<cmd>Gdiffsplit<CR>", desc = "[G]it [D]iff" },
       { "<leader>gD", "<cmd>Gdiffsplit --cached<CR>", desc = "[G]it staged [D]iff" },
-      { "<leader>g<", "<cmd>diffget //2<CR>", desc = "[G]it diffget from index (ours)" },
-      { "<leader>g>", "<cmd>diffget //3<CR>", desc = "[G]it diffget from working (theirs)" },
+      { "<leader>g<", "<cmd>diffget //2<CR>", desc = "[G]it diffget from ours" },
+      { "<leader>g>", "<cmd>diffget //3<CR>", desc = "[G]it diffget from theirs" },
 
       -- branches
       { "<leader>gf", "<cmd>Git fetch --prune<CR>", desc = "[G]it [F]etch" },
@@ -94,10 +87,10 @@ return {
           end
         end, { desc = "Jump to previous git [c]hange" })
 
-        map("v", "<leader>hs", function()
+        map("x", "<leader>hs", function()
           gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "git [H]unk [S]tage" })
-        map("v", "<leader>hr", function()
+        map("x", "<leader>hr", function()
           gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "git [H]unk [R]eset" })
 

@@ -39,7 +39,7 @@ return {
         desc = "Lint modifiable buffers only",
         group = lint_augroup,
         callback = function()
-          if vim.opt_local.modifiable:get() then
+          if vim.bo.modifiable then
             lint.try_lint()
           end
         end,

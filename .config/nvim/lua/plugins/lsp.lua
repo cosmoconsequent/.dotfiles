@@ -6,8 +6,6 @@ return {
       "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-      { "j-hui/fidget.nvim", opts = {} },
-
       "hrsh7th/cmp-nvim-lsp",
 
       "b0o/schemastore.nvim",
@@ -21,31 +19,21 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          -- 0.11 lsp keymaps plus others aligned:
+          -- aligned with 0.11+ lsp keymaps:
           map("grd", vim.lsp.buf.definition, "[G]oto [R]efactor [D]efinition")
           map("grD", vim.lsp.buf.declaration, "[G]oto [R]efactor [D]eclaration")
           -- gri
-          map("grt", vim.lsp.buf.type_definition, "[G]oto [R]efactor [T]ype definition")
+          -- grt
           -- grr
           -- gO
           -- i_CTRL-S
           -- gra
           -- grn
-
-          ---@param client vim.lsp.Client
-          ---@param method vim.lsp.protocol.Method
-          ---@param bufnr? integer some lsp support methods only in specific files
-          ---@return boolean
-          local function client_supports_method(client, method, bufnr)
-            return client:supports_method(method, bufnr)
-          end
+          -- grx
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-          if
-            client
-            and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
-          then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
@@ -68,7 +56,7 @@ return {
             })
           end
 
-          if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
             map("<leader>ch", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, "Toggle [C]ode Inlay [H]ints")
@@ -76,22 +64,48 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd("LspProgress", {
+        group = vim.api.nvim_create_augroup("lsp-progress", { clear = true }),
+        callback = function(ev)
+          local value = ev.data.params.value
+          local echo_id = "lsp." .. ev.data.params.token
+
+          vim.api.nvim_echo({ { value.message or "done" } }, false, {
+            id = echo_id,
+            kind = "progress",
+            source = "vim.lsp",
+            title = value.title,
+            status = value.kind ~= "end" and "running" or "success",
+            percent = value.percentage,
+          })
+
+          if value.kind == "end" then
+            vim.defer_fn(function()
+              vim.api.nvim_echo({ { "" } }, false, {
+                id = echo_id,
+              })
+            end, 2000)
+          end
+        end,
+      })
+
       vim.diagnostic.config({
         severity_sort = true,
         float = { border = "rounded", source = "if_many" },
-        underline = { severity = vim.diagnostic.severity.ERROR },
+        underline = { severity = { min = vim.diagnostic.severity.ERROR } },
         signs = {},
         virtual_text = {
           source = "if_many",
           spacing = 2,
-          format = function(diagnostic)
-            local diagnostic_message = {
-              [vim.diagnostic.severity.ERROR] = diagnostic.message,
-              [vim.diagnostic.severity.WARN] = diagnostic.message,
-              [vim.diagnostic.severity.INFO] = diagnostic.message,
-              [vim.diagnostic.severity.HINT] = diagnostic.message,
-            }
-            return diagnostic_message[diagnostic.severity]
+        },
+        -- Auto open the float when jumping with `[d` and `]d`
+        jump = {
+          on_jump = function(_, bufnr)
+            vim.diagnostic.open_float({
+              bufnr = bufnr,
+              scope = "cursor",
+              focus = false,
+            })
           end,
         },
       })
