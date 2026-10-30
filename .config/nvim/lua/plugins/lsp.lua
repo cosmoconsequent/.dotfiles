@@ -6,8 +6,6 @@ return {
       "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-      "hrsh7th/cmp-nvim-lsp",
-
       "b0o/schemastore.nvim",
     },
     config = function()
@@ -161,7 +159,6 @@ return {
         marksman = {},
       }
 
-      vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
       for name, cfg in pairs(servers) do
         vim.lsp.config(name, cfg)
       end
@@ -199,5 +196,16 @@ return {
         },
       }
     end,
+  },
+
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- "Only load luvit types when the `vim.uv` word is found"
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
   },
 }
