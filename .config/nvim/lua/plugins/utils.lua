@@ -10,68 +10,25 @@ return {
 
   {
     "nvim-mini/mini.ai",
-    config = function()
-      require("mini.ai").setup({ n_lines = 50 })
-    end,
+    event = "VeryLazy",
+    opts = {
+      n_lines = 50,
+    },
   },
 
   {
     "mbbill/undotree",
-    config = function()
-      vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [U]ndotree" })
-    end,
+    keys = {
+      { "<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle [U]ndotree" },
+    },
   },
 
   {
     "HakonHarnes/img-clip.nvim",
-    event = "VeryLazy",
+    event = "VeryLazy", -- drag-and-drop
     opts = {},
     keys = {
-      { "<leader>i", "<cmd>PasteImage<cr>", mode = "n", desc = "Paste [I]mage from clipboard" },
-    },
-  },
-
-  {
-    "folke/trouble.nvim",
-    opts = {
-      icons = {},
-      use_diagnostic_signs = true,
-    },
-    keys = {
-      {
-        "<leader>ct",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "[C]ode [T]rouble current buffer",
-      },
-      { "<leader>cT", "<cmd>Trouble diagnostics toggle<cr>", desc = "[C]ode [T]rouble workspace" },
-      {
-        "[q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").prev({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cprev)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Previous Trouble/[Q]uickfix Item",
-      },
-      {
-        "]q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").next({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cnext)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Next Trouble/[Q]uickfix Item",
-      },
+      { "<leader>i", "<cmd>PasteImage<cr>", desc = "Paste [I]mage from clipboard" },
     },
   },
 
@@ -106,48 +63,20 @@ return {
     },
   },
 
+  -- zen buffer doesn't update lualine, maybe fix sometime
   {
-    "stevearc/aerial.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = {},
+    "folke/zen-mode.nvim",
+    opts = {
+      window = { backdrop = 1 },
+    },
     keys = {
-      { "<leader>co", "<cmd>AerialToggle!<CR>", desc = "Toggle [C]ode [O]utline" },
+      { "<leader>z", "<cmd>ZenMode<CR>", desc = "Toggle [Z]en Mode" },
     },
   },
 
   {
-    "folke/zen-mode.nvim",
-    config = function()
-      -- zen buffer doesn't update lualine, maybe fix sometime
-      require("zen-mode").setup({
-        window = {
-          backdrop = 1,
-        },
-      })
-      vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<CR>", { desc = "Toggle [Z]en Mode" })
-    end,
-  },
-
-  {
     "laytan/cloak.nvim",
-    config = function()
-      require("cloak").setup({
-        enabled = true,
-        cloak_character = "*",
-        highlight_group = "Comment",
-        cloak_length = nil,
-        try_all_patterns = true,
-        cloak_telescope = true,
-        cloak_on_leave = false,
-        patterns = {
-          {
-            file_pattern = ".env*",
-            cloak_pattern = "=.+",
-            replace = nil,
-          },
-        },
-      })
-    end,
+    opts = {},
   },
 
   {

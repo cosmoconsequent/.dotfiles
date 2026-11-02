@@ -1,7 +1,7 @@
 return {
   {
     "coder/claudecode.nvim",
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       terminal = {
         provider = "none",

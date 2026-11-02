@@ -3,7 +3,7 @@ require("keymaps")
 require("lazy_vim")
 
 -- no F keys, tabs, folds, file tree, nerd fonts
--- keymap descs are for telescope
+-- keymap descs populate picker
 -- no keymap group overloads
 
 -- keymap groups:

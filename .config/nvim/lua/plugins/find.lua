@@ -1,73 +1,150 @@
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    event = "VimEnter",
-    branch = "master",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
+    "ibhagwan/fzf-lua",
+    event = "VeryLazy",
+    ---@module "fzf-lua"
+    ---@type fzf-lua.Config|{}
+    opts = {
+      "max-perf",
+      grep = { rg_glob = true },
+      lsp = { symbols = { locate = true } },
+      ui_select = {},
+      winopts = {
+        border = "border-top",
+        fullscreen = true,
+        preview = { horizontal = "right:50%" },
       },
-      { "nvim-telescope/telescope-ui-select.nvim" },
     },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          layout_strategy = "vertical",
-        },
-        extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown(),
-          },
-        },
-      })
+    keys = {
+      {
+        "<leader>fh",
+        function()
+          require("fzf-lua").helptags()
+        end,
+        desc = "[F]ind [H]elp",
+      },
+      {
+        "<leader>fk",
+        function()
+          require("fzf-lua").keymaps()
+        end,
+        desc = "[F]ind [K]eymaps",
+      },
+      {
+        "<leader>fr",
+        function()
+          require("fzf-lua").resume()
+        end,
+        desc = "[F]ind [R]esume",
+      },
+      {
+        "<leader>ff",
+        function()
+          require("fzf-lua").files()
+        end,
+        desc = "[F]ind [F]iles",
+      },
+      {
+        "<leader>fp",
+        function()
+          require("fzf-lua").oldfiles()
+        end,
+        desc = "[F]ind [P]revious files",
+      },
+      {
+        "<leader>fn",
+        function()
+          require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
+        end,
+        desc = "[F]ind [N]eovim files",
+      },
+      {
+        "<leader>fb",
+        function()
+          require("fzf-lua").buffers()
+        end,
+        desc = "[F]ind [B]uffers",
+      },
+      {
+        "<leader>fl",
+        function()
+          require("fzf-lua").blines()
+        end,
+        desc = "[F]ind current buffer [L]ines",
+      },
+      {
+        "<leader>fL",
+        function()
+          require("fzf-lua").lines()
+        end,
+        desc = "[F]ind all buffer [L]ines",
+      },
+      {
+        "<leader>fs",
+        function()
+          require("fzf-lua").lsp_document_symbols()
+        end,
+        desc = "[F]ind document [S]ymbols",
+      },
+      {
+        "<leader>fS",
+        function()
+          require("fzf-lua").lsp_live_workspace_symbols()
+        end,
+        desc = "[F]ind workspace [S]ymbols",
+      },
+      {
+        "<leader>fd",
+        function()
+          require("fzf-lua").diagnostics_document()
+        end,
+        desc = "[F]ind document [D]iagnostics",
+      },
+      {
+        "<leader>fD",
+        function()
+          require("fzf-lua").diagnostics_workspace()
+        end,
+        desc = "[F]ind workspace [D]iagnostics",
+      },
+      {
+        "<leader>fg",
+        function()
+          require("fzf-lua").live_grep()
+        end,
+        desc = "[F]ind by [G]rep",
+      },
+      {
+        "<leader>ft",
+        function()
+          require("fzf-lua").grep_cword()
+        end,
+        desc = "[F]ind word [T]ext",
+      },
+      {
+        "<leader>ft",
+        function()
+          require("fzf-lua").grep_visual()
+        end,
+        mode = "x",
+        desc = "[F]ind selected [T]ext",
+      },
+    },
+  },
 
-      pcall(require("telescope").load_extension, "fzf")
-      pcall(require("telescope").load_extension, "ui-select")
-
-      local builtin = require("telescope.builtin")
-
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
-      vim.keymap.set("n", "<leader>fG", function()
-        builtin.grep_string({ search = vim.fn.input("Grep > ") })
-      end, { desc = "[F]ind by [G]rep base string" })
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "[F]ind in existing [B]uffers" })
-      vim.keymap.set("n", "<leader>fs", builtin.git_files, { desc = "[F]ind by git [S]ource" })
-
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp" })
-      vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymaps" })
-      vim.keymap.set("n", "<leader>fp", builtin.builtin, { desc = "[F]ind Telescope [P]ickers" })
-
-      vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
-      vim.keymap.set("n", "<leader>fW", function()
-        builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
-      end, { desc = "[F]ind current [W]ORD" })
-
-      vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]ind [D]iagnostics" })
-
-      vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]ind [R]esume" })
-      vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
-
-      vim.keymap.set("n", "<leader>/", function()
-        builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-          winblend = 20,
-          previewer = false,
-        }))
-      end, { desc = "[/] Fuzzily search in current buffer" })
-
-      vim.keymap.set("n", "<leader>f/", function()
-        builtin.live_grep({
-          grep_open_files = true,
-          prompt_title = "Live Grep in Open Files",
-        })
-      end, { desc = "[F]ind [/] in Open Files" })
-
-      vim.keymap.set("n", "<leader>fn", function()
-        builtin.find_files({ cwd = vim.fn.stdpath("config") })
-      end, { desc = "[F]ind in [N]eovim files" })
-    end,
+  {
+    "stevearc/aerial.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {},
+    keys = {
+      {
+        "<leader>fo",
+        function()
+          require("aerial").fzf_lua_picker({ fzf_opts = { ["--layout"] = "reverse" } })
+        end,
+        desc = "[F]ind document [O]utline",
+      },
+    },
   },
 
   {

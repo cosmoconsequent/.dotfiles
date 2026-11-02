@@ -18,16 +18,22 @@ return {
           end
 
           -- aligned with 0.11+ lsp keymaps:
-          map("grd", vim.lsp.buf.definition, "[G]oto [R]efactor [D]efinition")
-          map("grD", vim.lsp.buf.declaration, "[G]oto [R]efactor [D]eclaration")
-          -- gri
+          map("grd", vim.lsp.buf.definition, "[G]o [R]efactor [D]efinition")
+          map("grD", vim.lsp.buf.declaration, "[G]o [R]efactor [D]eclaration")
+          -- overrides:
+          map("grr", function()
+            require("fzf-lua").lsp_references()
+          end, "[G]o [R]efactor [R]eferences")
+          map("gri", function()
+            require("fzf-lua").lsp_implementations()
+          end, "[G]o [R]efactor [I]mplementations")
+          -- builtin:
           -- grt
-          -- grr
-          -- gO
-          -- i_CTRL-S
           -- gra
           -- grn
           -- grx
+          -- gO
+          -- i_CTRL-S
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 

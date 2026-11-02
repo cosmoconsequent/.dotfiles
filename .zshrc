@@ -54,6 +54,7 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 if command -v fzf &>/dev/null; then
     source <(fzf --zsh)
+    export FZF_DEFAULT_OPTS="--layout=reverse --info=inline-right"
     export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
