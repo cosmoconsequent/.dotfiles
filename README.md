@@ -7,17 +7,17 @@ Unix keys in the terminal, Vim keys everywhere else.
 
 * **Window Manager:** `hyprland` on Arch and `sway` on Debian/Ubuntu, for simplicity and speed on Wayland.
   Server-like Waybar. Aerospace on macOS. i3-like keybindings.
-* **Shell:** `zsh` with a minimal set of modern efficiency plugins.
-  `fd`, `fzf`, `ripgrep` and `zoxide` integration for fast navigation. Unobtrusive Pure prompt.
-* **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol and cross-platform momentum.
-  JetBrains Mono.
+* **Terminal:** `ghostty` for GPU-accelerated & Zig speed, Kitty graphics protocol, and cross-platform support.
+  JetBrains Mono. Kanagawa Wave theme.
+* **Shell:** `zsh` with a minimal set of modern efficiency plugins. Unobtrusive Pure prompt.
+  `fd`, `ripgrep`, `fzf`, and `zoxide` integration for fast navigation.
+  `bat` for scalable previews and paging. `delta` for diffs.
 * **Multiplexer:** `tmux` for session management. Minimal plugins for save/resume. `C-a` prefix. vi copy mode.
 * **Editor:** `nvim` optimized for C, C++, Rust, Go, Python and JS/TS.\
-  (lazy.nvim, mason, telescope, nvim-cmp, nvim-lspconfig, rustaceanvim, nvim-lint, conform, nvim-dap, neotest,
+  (lazy.nvim, mason, fzf-lua, blink, nvim-lspconfig, rustaceanvim, nvim-lint, conform, nvim-dap, neotest,
   vim-fugitive, gitsigns, claudecode, lazy-loaded utils)
-* **Input:** `keyd` on Linux for system-wide modifier normalization,
-  remaps standard and laptop keyboards to match split mechanical thumb cluster ergonomics. Capslock to Esc.
-* **Extras:** Kanagawa Wave theme. `bat` for paging. `delta` for diffs. `gitui` for operational speed.
+* **Input:** `keyd` on Linux for system-wide modifier normalization, remaps standard and laptop keyboards
+  to match split mechanical thumb cluster ergonomics. Capslock to Esc.
 
 ![Arch 2238](.config/dotfiles/arch-2238.png)
 

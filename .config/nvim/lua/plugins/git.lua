@@ -1,54 +1,31 @@
 return {
   {
     "tpope/vim-fugitive",
-    cmd = { "Git", "G" },
+    event = "VeryLazy",
     keys = {
-      -- files / working
-      { "<leader>gs", "<cmd>Git<CR>", desc = "[G]it [S]tatus" },
-      { "<leader>ga", "<cmd>Gwrite<CR>", desc = "[G]it [A]dd current file" },
-      { "<leader>gc", "<cmd>Git commit<CR>", desc = "[G]it [C]ommit" },
-      { "<leader>gC", "<cmd>Git commit -a<CR>", desc = "[G]it [C]ommit with add" },
-      { "<leader>gm", "<cmd>Git commit --amend --no-edit<CR>", desc = "[G]it a[M]end last commit" },
-      { "<leader>gp", "<cmd>Git push<CR>", desc = "[G]it [P]ush" },
-      { "<leader>gt", "<cmd>Git push -u origin HEAD<CR>", desc = "[G]it push set upstream [T]arget" },
-      { "<leader>gP", "<cmd>Git pull --rebase --autostash<CR>", desc = "[G]it [P]ull rebase autostash" },
-      { "<leader>gr", "<cmd>Git reset HEAD %<CR>", desc = "[G]it [R]eset current file" },
-      { "<leader>gu", "<cmd>Gedit<CR>", desc = "[G]it [U]ndo buffer to HEAD" },
-
-      -- diff
-      { "<leader>gd", "<cmd>Gdiffsplit<CR>", desc = "[G]it [D]iff" },
-      { "<leader>gD", "<cmd>Gdiffsplit --cached<CR>", desc = "[G]it staged [D]iff" },
-      { "<leader>g<", "<cmd>diffget //2<CR>", desc = "[G]it diffget from ours" },
-      { "<leader>g>", "<cmd>diffget //3<CR>", desc = "[G]it diffget from theirs" },
-
-      -- branches
-      { "<leader>gf", "<cmd>Git fetch --prune<CR>", desc = "[G]it [F]etch" },
-      { "<leader>gb", "<cmd>Git branch<CR>", desc = "[G]it [B]ranches" },
-      { "<leader>gB", "<cmd>Git branch -a<CR>", desc = "[G]it all [B]ranches" },
+      { "<leader>gs", "<cmd>Git<CR>", desc = "[G]it [S]ummary" },
       {
-        "<leader>gw",
+        "<leader>gb",
         function()
-          local branch = vim.fn.input("Switch to branch: ")
-          vim.cmd("Git switch " .. branch)
+          require("fzf-lua").git_branches()
         end,
-        desc = "[G]it s[W]itch branch",
+        desc = "[G]it [B]ranches",
       },
       {
-        "<leader>gW",
+        "<leader>gl",
         function()
-          local branch = vim.fn.input("Switch to new branch: ")
-          if branch ~= "" then
-            vim.cmd("Git switch -c " .. branch)
-          else
-            vim.notify("Provide a new branch name", vim.log.levels.WARN)
-          end
+          require("fzf-lua").git_bcommits()
         end,
-        desc = "[G]it s[W]itch new branch",
+        desc = "[G]it buffer [L]og",
       },
-
-      -- history
-      { "<leader>gl", "<cmd>Git log --oneline --graph --decorate<CR>", desc = "[G]it [L]og graph" },
-      { "<leader>ge", "<cmd>Git blame<CR>", desc = "[G]it blam[E] / [E]dits" },
+      {
+        "<leader>gL",
+        function()
+          require("fzf-lua").git_commits()
+        end,
+        desc = "[G]it [L]og",
+      },
+      { "<leader>ga", "<cmd>Git blame<CR>", desc = "[G]it [A]nnotate (blame)" },
     },
   },
 
@@ -77,7 +54,7 @@ return {
           else
             gitsigns.nav_hunk("next")
           end
-        end, { desc = "Jump to next git [c]hange" })
+        end, { desc = "Jump to next [C]hange" })
 
         map("n", "[c", function()
           if vim.wo.diff then
@@ -85,23 +62,25 @@ return {
           else
             gitsigns.nav_hunk("prev")
           end
-        end, { desc = "Jump to previous git [c]hange" })
+        end, { desc = "Jump to previous [C]hange" })
 
+        map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select [I]nside git [H]unk" })
+
+        map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git [H]unk [P]review" })
+
+        map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "git [H]unk [S]tage toggle" })
         map("x", "<leader>hs", function()
           gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "git [H]unk [S]tage" })
+
+        map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "git [H]unk [R]eset" })
         map("x", "<leader>hr", function()
           gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "git [H]unk [R]eset" })
 
-        map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "git [H]unk toggle [S]tage" })
-        map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "git [H]unk [R]eset" })
-        map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git [H]unk [P]review" })
-        map("n", "<leader>he", gitsigns.blame_line, { desc = "git [H]unk blam[E] line" }) -- consistent with fugitive
-        map("n", "<leader>hd", gitsigns.diffthis, { desc = "git [H]unk [D]iff against index" })
-        map("n", "<leader>hD", function()
-          gitsigns.diffthis("@")
-        end, { desc = "git [H]unk [D]iff against last commit" })
+        map("n", "<leader>ha", function()
+          gitsigns.blame_line({ full = true })
+        end, { desc = "git [H]unk [A]nnotate (blame)" })
       end,
     },
   },

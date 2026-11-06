@@ -57,6 +57,7 @@ local max_filesize = 1024 * 1024
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     branch = "main",
     build = ":TSUpdate",
     config = function()

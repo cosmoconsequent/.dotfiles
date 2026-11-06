@@ -3,18 +3,25 @@
 [core]
 	autocrlf = input
 	pager = delta
-[interactive]
-	diffFilter = delta --color-only
 [delta]
 	navigate = true
 	line-numbers = true
 	syntax-theme = kanagawa
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[pull]
+	rebase = merges
+	autoStash = true
 [diff]
 	algorithm = histogram
 [merge]
 	conflictStyle = zdiff3
 [rerere]
 	enabled = true
+[interactive]
+	diffFilter = delta --color-only
 [credential]
 	helper = cache
 	helper = !type pass-git-helper >/dev/null 2>&1 && pass-git-helper $@

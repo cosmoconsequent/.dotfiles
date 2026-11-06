@@ -19,7 +19,7 @@ return {
   {
     "mbbill/undotree",
     keys = {
-      { "<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle [U]ndotree" },
+      { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle [U]ndotree" },
     },
   },
 
@@ -28,7 +28,7 @@ return {
     event = "VeryLazy", -- drag-and-drop
     opts = {},
     keys = {
-      { "<leader>i", "<cmd>PasteImage<cr>", desc = "Paste [I]mage from clipboard" },
+      { "<leader>i", "<cmd>PasteImage<CR>", desc = "Paste [I]mage from clipboard" },
     },
   },
 
@@ -92,7 +92,6 @@ return {
 
   {
     "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
     build = ":call mkdp#util#install()",
   },
