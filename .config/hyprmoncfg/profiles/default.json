@@ -1,0 +1,42 @@
+{
+  "name": "default",
+  "created_at": "2026-11-13T05:43:17.931961494Z",
+  "updated_at": "2026-11-13T05:43:17.932809041Z",
+  "outputs": [
+    {
+      "key": "lenovo group limited|n160jca-gt1",
+      "match_key": "lenovo group limited|n160jca-gt1",
+      "name": "eDP-1",
+      "description": "Lenovo Group Limited N160JCA-GT1",
+      "make": "Lenovo Group Limited",
+      "model": "N160JCA-GT1",
+      "enabled": true,
+      "mode": "1920x1200@60.00Hz",
+      "width": 1920,
+      "height": 1200,
+      "refresh": 60,
+      "x": 0,
+      "y": 0,
+      "scale": 1.25,
+      "vrr": 1,
+      "transform": 0,
+      "bitdepth": 8,
+      "cm": "srgb",
+      "sdr_brightness": 1,
+      "sdr_saturation": 1,
+      "sdr_min_luminance": 0.2,
+      "sdr_max_luminance": 80,
+      "min_luminance": 0
+    }
+  ],
+  "workspaces": {
+    "enabled": false,
+    "strategy": "sequential",
+    "max_workspaces": 9,
+    "group_size": 3,
+    "monitor_order": [
+      "lenovo group limited|n160jca-gt1"
+    ]
+  },
+  "exec": ""
+}
